@@ -1,14 +1,15 @@
+// Importe le package express
 const express = require('express');
-const mongoose = require('mongoose');
-// On importe notre routeur pour l'endpoint Stuff
+// On importe notre routeur pour l'endpoint Stuff dans la variable stuffRoute
 const stuffRoute = require('./routes/stuff');
 
+// Lance la méthode express pour créer une application
 const app = express();
 
-mongoose.connect('mongodb+srv://Guillaume:MongoDBcluster137@mycluster.a8kns57.mongodb.net/?appName=MyCluster')
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch((error) => console.log( error ));
-
+/*
+Middleware qui prend toutes les requêtes ayant comme Content-type Application/JSON
+et rend leur body utilisable directement sur l'objet req
+*/
 app.use(express.json());
 
 /* 
@@ -28,4 +29,5 @@ app.use((req, res, next) => {
 // On assigne l'endpoint Stuff au routeur stuffRoute
 app.use('/api/stuff', stuffRoute);
 
+// On exporte notre app
 module.exports = app;

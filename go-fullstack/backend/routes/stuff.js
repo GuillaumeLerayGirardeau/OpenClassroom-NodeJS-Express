@@ -1,21 +1,19 @@
+// Importe le package express
 const express = require('express');
-const Thing = require('../models/thing');
+// Importe les fonctions de la logique métier dans la variable stuffCtrl
 const stuffCtrl = require('../controllers/stuff');
 
+/*
+Importe la méthode router dans la fonction routeur, permet de gérer les requêtes 
+et réponses http et de les traiter dans un fichier séparé
+*/
 const router = express.Router();
 
+/* 
+Défini une requête POST sur la route '/' qui executera la fonction createThing
+contenu dans les controllers
+*/
 router.post('/', stuffCtrl.createThing);
 
-router.get('/', (req, res, next) => {
-  Thing.find()
-    .then(things => res.status(200).json(things))
-    .catch(error => res.status(400).json({ error }));
-});
-
-router.get('/:id', (req, res, next) => {
-  Thing.findOne({ _id: req.params.id })
-    .then(thing => res.status(200).json(thing))
-    .catch(error => res.status(404).json({ error }));
-});
-
+// On exporte le routeur pour qu'il puisse être importé par le fichier app
 module.exports = router;
